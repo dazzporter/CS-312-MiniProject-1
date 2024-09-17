@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini-Blog</title>
+    <style>
+        body {
+            background-color: cadetblue;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        textarea {
+            width: 50%;
+            height: 150px;
+        }
+        .container {
+            display: grid;
+            grid-template-rows: 25% 25% 25% 25%;
+            grid-template-columns: 15% 70% 15%;
+            text-align: center;
+        }
+        .header {
+            grid-column-start: 2;
+            grid-row-start: 1;
+        }
+        .catalog {
+            grid-column-start: 2;
+            grid-row-start: 2;
+            background-color: floralwhite;
+            height: fit-content;
+        }
+        .post-box {
+            grid-column-start: 2;
+            grid-row-start: 4;
+        }
+    </style>
+    <script>
+        function blogPost(event) {
+            event.preventDefault(); // Prevent form submission
+
+            let authorName = document.getElementById('post-author').value;
+            let blogTitle = document.getElementById('post-title').value;
+            let blogContent = document.getElementById('post-content').value;
+            let currentDate = new Date();
+            let postDate = currentDate.toLocaleString();
+
+            let newPost = document.createElement('div');
+
+            let postAuthor = document.createElement('h5');
+            postAuthor.textContent = `Author: ${authorName}`;
+            newPost.appendChild(postAuthor);
+
+            let postTitle = document.createElement('h6');
+            postTitle.textContent = `Title: ${blogTitle}`;
+            newPost.appendChild(postTitle);
+
+            let postContent = document.createElement('p');
+            postContent.textContent = blogContent;
+            newPost.appendChild(postContent);
+
+            let postDateElement = document.createElement('p');
+            postDateElement.textContent = `Posted on: ${postDate}`;
+            newPost.appendChild(postDateElement);
+
+            let deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Delete';
+            deleteButton.addEventListener('click', function()
+            {
+                newPost.remove();
+            });
+            newPost.appendChild(deleteButton);
+
+            document.getElementById('submitted-posts').appendChild(newPost);
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Hello Blogger</h1>
+        </div>
+        <div class="catalog">
+            <h3>Catalog</h3>
+            <div id="submitted-posts"></div>
+        </div>
+        <div class="post-box">
+            <p>You may blog below :)</p>
+            <form onsubmit="blogPost(event)">
+                <label for="post-author">Author: </label>
+                <input type="text" placeholder="Enter Name Here" id="post-author">
+                <br><br>
+                <label for="post-title">Title: </label>
+                <input type="text" id="post-title">
+                <br><br>
+                <textarea name="post-content" id="post-content" placeholder="Blog Away..."></textarea>
+                <br><br>
+                <button id="sub-button" type="submit">Submit Post</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
